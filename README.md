@@ -1,9 +1,9 @@
 # k8s-jenkins-ci
 
-#### 介绍
+#### 介绍/参考文章
 在Kubernetes上部署和伸缩Jenkins
 镜像内置常用插件/常用命令/mvn npm
-
+[参考文章-在Kubernetes上部署和伸缩Jenkins](http://https://mp.weixin.qq.com/s/EaWgivb0PoAGdAvmX0MjPA)
 
 #### 安装教程
 ### 构建镜像
