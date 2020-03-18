@@ -1,0 +1,63 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: jenkins
+spec:
+  selector:
+    matchLabels:
+      app: jenkins
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: jenkins
+    spec:
+      containers:
+        - name: jenkins
+          image: registry.cn-chengdu.aliyuncs.com/7104475/jenkins-master:v1.0
+          env:
+            - name: JAVA_OPTS
+              value: -Djenkins.install.runSetupWizard=false
+          ports:
+            - name: http-port
+              containerPort: 8080
+            - name: jnlp-port
+              containerPort: 50000
+          volumeMounts:
+            - name: jenkins-home
+              mountPath: /var/jenkins_home
+            - name: jenkins-m2
+              mountPath: /root/.m2
+            - name: jenkins-npm
+              mountPath: /root/.npm
+            - name: jenkins-docker-01
+              mountPath: /usr/bin/docker
+            - name: jenkins-docker-02
+              mountPath: /var/run/docker.sock
+#            - name: jenkins-mvn-conf
+#              mountPath: /usr/local/maven/apache-maven-3.6.3/conf/settings.xml
+#              subPath: settings.xml
+      volumes:
+        - name: jenkins-home
+          hostPath:
+            path: /data/jenkins_master
+            type: ""
+        - name: jenkins-m2
+          hostPath:
+            path: /data/jenkins_master/m2
+            type: ""
+        - name: jenkins-npm
+          hostPath:
+            path: /data/jenkins_master/npm
+            type: ""
+        - name: jenkins-docker-01
+          hostPath:
+            path: /usr/bin/docker
+            type: ""
+        - name: jenkins-docker-02
+          hostPath:
+            path: /var/run/docker.sock
+            type: ""
+#        - name: jenkins-mvn-conf
+#          configMap:
+#              name: jenkins-cm
